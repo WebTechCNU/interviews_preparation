@@ -6,37 +6,39 @@
 
 Синглтон позволяет создать объект только при его необходимости. Если объект не нужен, то он не будет создан. В этом отличие синглтона от глобальных переменных.
 
+```
 class Singleton
 
 {
 
-&nbsp;   private static Singleton instance;
+   private static Singleton instance;
 
-&nbsp;
 
-&nbsp;   private Singleton()
 
-&nbsp;   {}
+   private Singleton()
 
-&nbsp;
+   {}
 
-&nbsp;   public static Singleton getInstance()
 
-&nbsp;   {
 
-&nbsp;       if (instance == null)
+   public static Singleton getInstance()
 
-&nbsp;           instance = new Singleton();
+   {
 
-&nbsp;       return instance;
+       if (instance == null)
 
-&nbsp;   }
+           instance = new Singleton();
+
+       return instance;
+
+   }
 
 }
+```
 
 В классе определяется статическая переменная - ссылка на конкретный экземпляр данного объекта и приватный конструктор. В статическом методе getInstance() этот конструктор вызывается для создания объекта, если, конечно, объект отсутствует и равен null.
 
-1. **Builder**
+2. **Builder**
 
 Строитель (Builder) - шаблон проектирования, который инкапсулирует создание объекта и позволяет разделить его на различные этапы.
 
@@ -45,23 +47,24 @@ class Singleton
 - Когда процесс создания нового объекта не должен зависеть от того, из каких частей этот объект состоит и как эти части связаны между собой
 - Когда необходимо обеспечить получение различных вариаций объекта в процессе его создания
 
+```
 class Client
 
 {
 
-&nbsp;   void Main()
+   void Main()
 
-&nbsp;   {
+   {
 
-&nbsp;       Builder builder = new ConcreteBuilder();
+       Builder builder = new ConcreteBuilder();
 
-&nbsp;       Director director = new Director(builder);
+       Director director = new Director(builder);
 
-&nbsp;       director.Construct();
+       director.Construct();
 
-&nbsp;       Product product = builder.GetResult();
+       Product product = builder.GetResult();
 
-&nbsp;   }
+   }
 
 }
 
@@ -69,112 +72,113 @@ class Director
 
 {
 
-&nbsp;   Builder builder;
+   Builder builder;
 
-&nbsp;   public Director(Builder builder)
+   public Director(Builder builder)
 
-&nbsp;   {
+   {
 
-&nbsp;       this.builder = builder;
+       this.builder = builder;
 
-&nbsp;   }
+   }
 
-&nbsp;   public void Construct()
+   public void Construct()
 
-&nbsp;   {
+   {
 
-&nbsp;       builder.BuildPartA();
+       builder.BuildPartA();
 
-&nbsp;       builder.BuildPartB();
+       builder.BuildPartB();
 
-&nbsp;       builder.BuildPartC();
+       builder.BuildPartC();
 
-&nbsp;   }
+   }
 
 }
 
-&nbsp;
+
 
 abstract class Builder
 
 {
 
-&nbsp;   public abstract void BuildPartA();
+   public abstract void BuildPartA();
 
-&nbsp;   public abstract void BuildPartB();
+   public abstract void BuildPartB();
 
-&nbsp;   public abstract void BuildPartC();
+   public abstract void BuildPartC();
 
-&nbsp;   public abstract Product GetResult();
+   public abstract Product GetResult();
 
 }
 
-&nbsp;
+
 
 class Product
 
 {
 
-&nbsp;   List&lt;object&gt; parts = new List&lt;object&gt;();
+   List&lt;object&gt; parts = new List&lt;object&gt;();
 
-&nbsp;   public void Add(string part)
+   public void Add(string part)
 
-&nbsp;   {
+   {
 
-&nbsp;       parts.Add(part);
+       parts.Add(part);
 
-&nbsp;   }
+   }
 
 }
 
-&nbsp;
+
 
 class ConcreteBuilder : Builder
 
 {
 
-&nbsp;   Product product = new Product();
+   Product product = new Product();
 
-&nbsp;   public override void BuildPartA()
+   public override void BuildPartA()
 
-&nbsp;   {
+   {
 
-&nbsp;       product.Add("Part A");
+       product.Add("Part A");
 
-&nbsp;   }
+   }
 
-&nbsp;   public override void BuildPartB()
+   public override void BuildPartB()
 
-&nbsp;   {
+   {
 
-&nbsp;       product.Add("Part B");
+       product.Add("Part B");
 
-&nbsp;   }
+   }
 
-&nbsp;   public override void BuildPartC()
+   public override void BuildPartC()
 
-&nbsp;   {
+   {
 
-&nbsp;       product.Add("Part C");
+       product.Add("Part C");
 
-&nbsp;   }
+   }
 
-&nbsp;   public override Product GetResult()
+   public override Product GetResult()
 
-&nbsp;   {
+   {
 
-&nbsp;       return product;
+       return product;
 
-&nbsp;   }
+   }
 
 }
+```
 
 - **Product**: представляет объект, который должен быть создан. В данном случае все части объекта заключены в списке parts.
 - **Builder**: определяет интерфейс для создания различных частей объекта Product
 - **ConcreteBuilder**: конкретная реализация Buildera. Создает объект Product и определяет интерфейс для доступа к нему
 - **Director**: распорядитель - создает объект, используя объекты Builder
 
-1. **Фабрика**
+3. **Фабрика**
 
 Фабричный метод (Factory Method) - это паттерн, который определяет интерфейс для создания объектов некоторого класса, но непосредственное решение о том, объект какого класса создавать происходит в подклассах. То есть паттерн предполагает, что базовый класс делегирует создание объектов классам-наследникам.
 
@@ -184,52 +188,53 @@ class ConcreteBuilder : Builder
 - Когда система должна быть независимой от процесса создания новых объектов и расширяемой: в нее можно легко вводить новые классы, объекты которых система должна создавать.
 - Когда создание новых объектов необходимо делегировать из базового класса классам наследникам
 
+```
 abstract class Product
 
 {}
 
-&nbsp;
+
 
 class ConcreteProductA : Product
 
 {}
 
-&nbsp;
+
 
 class ConcreteProductB : Product
 
 {}
 
-&nbsp;
+
 
 abstract class Creator
 
 {
 
-&nbsp;   public abstract Product FactoryMethod();
+   public abstract Product FactoryMethod();
 
 }
 
-&nbsp;
+
 
 class ConcreteCreatorA : Creator
 
 {
 
-&nbsp;   public override Product FactoryMethod() { return new ConcreteProductA(); }
+   public override Product FactoryMethod() { return new ConcreteProductA(); }
 
 }
 
-&nbsp;
+
 
 class ConcreteCreatorB : Creator
 
 {
 
-&nbsp;   public override Product FactoryMethod() { return new ConcreteProductB(); }
+   public override Product FactoryMethod() { return new ConcreteProductB(); }
 
 }
-
+```
 - Абстрактный класс **Product** определяет интерфейс класса, объекты которого надо создавать.
 - Конкретные классы **ConcreteProductA** и **ConcreteProductB** представляют реализацию класса Product. Таких классов может быть множество
 - Абстрактный класс **Creator** определяет абстрактный фабричный метод FactoryMethod(), который возвращает объект Product.
@@ -237,7 +242,7 @@ class ConcreteCreatorB : Creator
 
 Таким образом, класс Creator делегирует создание объекта Product своим наследникам. А классы ConcreteCreatorA и ConcreteCreatorB могут самостоятельно выбирать какой конкретный тип продукта им создавать.
 
-1. Абстрактна фабрика
+4. Абстрактна фабрика
 
 Паттерн "Абстрактная фабрика" (Abstract Factory) предоставляет интерфейс для создания семейств взаимосвязанных объектов с определенными интерфейсами без указания конкретных типов данных объектов.
 
@@ -246,13 +251,14 @@ class ConcreteCreatorB : Creator
 - Когда система не должна зависеть от способа создания и компоновки новых объектов
 - Когда создаваемые объекты должны использоваться вместе и являются взаимосвязанными
 
+```
 abstract class AbstractFactory
 
 {
 
-&nbsp;   public abstract AbstractProductA CreateProductA();
+   public abstract AbstractProductA CreateProductA();
 
-&nbsp;   public abstract AbstractProductB CreateProductB();
+   public abstract AbstractProductB CreateProductB();
 
 }
 
@@ -260,23 +266,23 @@ class ConcreteFactory1: AbstractFactory
 
 {
 
-&nbsp;   public override AbstractProductA CreateProductA()
+   public override AbstractProductA CreateProductA()
 
-&nbsp;   {
+   {
 
-&nbsp;       return new ProductA1();
+       return new ProductA1();
 
-&nbsp;   }
+   }
 
-&nbsp;
 
-&nbsp;   public override AbstractProductB CreateProductB()  
 
-&nbsp;   {
+   public override AbstractProductB CreateProductB()  
 
-&nbsp;       return new ProductB1();
+   {
 
-&nbsp;   }
+       return new ProductB1();
+
+   }
 
 }
 
@@ -284,89 +290,90 @@ class ConcreteFactory2: AbstractFactory
 
 {
 
-&nbsp;   public override AbstractProductA CreateProductA()
+   public override AbstractProductA CreateProductA()
 
-&nbsp;   {
+   {
 
-&nbsp;       return new ProductA2();
+       return new ProductA2();
 
-&nbsp;   }
+   }
 
-&nbsp;
 
-&nbsp;   public override AbstractProductB CreateProductB()
 
-&nbsp;   {
+   public override AbstractProductB CreateProductB()
 
-&nbsp;       return new ProductB2();
+   {
 
-&nbsp;   }
+       return new ProductB2();
+
+   }
 
 }
 
-&nbsp;
+
 
 abstract class AbstractProductA
 
 {}
 
-&nbsp;
+
 
 abstract class AbstractProductB
 
 {}
 
-&nbsp;
+
 
 class ProductA1: AbstractProductA  
 
 {}
 
-&nbsp;
+
 
 class ProductB1: AbstractProductB  
 
 {}
 
-&nbsp;
+
 
 class ProductA2: AbstractProductA  
 
 {}
 
-&nbsp;
+
 
 class ProductB2: AbstractProductB
 
 {}
 
-&nbsp;
+
 
 class Client
 
 {
 
-&nbsp;   private AbstractProductA abstractProductA;
+   private AbstractProductA abstractProductA;
 
-&nbsp;   private AbstractProductB abstractProductB;
+   private AbstractProductB abstractProductB;
 
-&nbsp;
 
-&nbsp;   public Client(AbstractFactory factory)
 
-&nbsp;   {
+   public Client(AbstractFactory factory)
 
-&nbsp;       abstractProductB = factory.CreateProductB();
+   {
 
-&nbsp;       abstractProductA = factory.CreateProductA();
+       abstractProductB = factory.CreateProductB();
 
-&nbsp;   }
+       abstractProductA = factory.CreateProductA();
 
-&nbsp;   public void Run()
+   }
 
-&nbsp;   { }
+   public void Run()
+
+   { }
 
 }
+```
 
 - Абстрактные классы **AbstractProductA** и **AbstractProductB** определяют интерфейс для классов, объекты которых будут создаваться в программе.
 - Конкретные классы **ProductA1 / ProductA2** и **ProductB1 / ProductB2** представляют конкретную реализацию абстрактных классов
@@ -374,7 +381,7 @@ class Client
 - Конкретные классы фабрик **ConcreteFactory1** и **ConcreteFactory2** реализуют абстрактные методы базового класса и непосредственно определяют какие конкретные продукты использовать
 - Класс клиента **Client** использует класс фабрики для создания объектов. При этом он использует исключительно абстрактный класс фабрики AbstractFactory и абстрактные классы продуктов AbstractProductA и AbstractProductB и никак не зависит от их конкретных реализаций
 
-1. **Прототип**
+5. **Прототип**
 
 Паттерн Прототип (Prototype) позволяет создавать объекты на основе уже ранее созданных объектов-прототипов. То есть по сути данный паттерн предлагает технику клонирования объектов.
 
@@ -384,89 +391,91 @@ class Client
 - Когда нежелательно создание отдельной иерархии классов фабрик для создания объектов-продуктов из параллельной иерархии классов (как это делается, например, при использовании паттерна Абстрактная фабрика)
 - Когда клонирование объекта является более предпочтительным вариантом нежели его создание и инициализация с помощью конструктора. Особенно когда известно, что объект может принимать небольшое ограниченное число возможных состояний.
 
+```
 class Client
 
 {
 
-&nbsp;   void Operation()
+   void Operation()
 
-&nbsp;   {
+   {
 
-&nbsp;       Prototype prototype = new ConcretePrototype1(1);
+       Prototype prototype = new ConcretePrototype1(1);
 
-&nbsp;       Prototype clone = prototype.Clone();
+       Prototype clone = prototype.Clone();
 
-&nbsp;       prototype = new ConcretePrototype2(2);
+       prototype = new ConcretePrototype2(2);
 
-&nbsp;       clone = prototype.Clone();
+       clone = prototype.Clone();
 
-&nbsp;   }
+   }
 
 }
 
-&nbsp;
+
 
 abstract class Prototype
 
 {
 
-&nbsp;   public int Id { get; private set; }
+   public int Id { get; private set; }
 
-&nbsp;   public Prototype(int id)
+   public Prototype(int id)
 
-&nbsp;   {
+   {
 
-&nbsp;       this.Id = id;
+       this.Id = id;
 
-&nbsp;   }
+   }
 
-&nbsp;   public abstract Prototype Clone();
+   public abstract Prototype Clone();
 
 }
 
-&nbsp;
+
 
 class ConcretePrototype1 : Prototype
 
 {
 
-&nbsp;   public ConcretePrototype1(int id)
+   public ConcretePrototype1(int id)
 
-&nbsp;       : base(id)
+       : base(id)
 
-&nbsp;   { }
+   { }
 
-&nbsp;   public override Prototype Clone()
+   public override Prototype Clone()
 
-&nbsp;   {
+   {
 
-&nbsp;       return new ConcretePrototype1(Id);
+       return new ConcretePrototype1(Id);
 
-&nbsp;   }
+   }
 
 }
 
-&nbsp;
+
 
 class ConcretePrototype2 : Prototype
 
 {
 
-&nbsp;   public ConcretePrototype2(int id)
+   public ConcretePrototype2(int id)
 
-&nbsp;       : base(id)
+       : base(id)
 
-&nbsp;   { }
+   { }
 
-&nbsp;   public override Prototype Clone()
+   public override Prototype Clone()
 
-&nbsp;   {
+   {
 
-&nbsp;       return new ConcretePrototype2(Id);
+       return new ConcretePrototype2(Id);
 
-&nbsp;   }
+   }
 
 }
+```
 
 - **Prototype**: определяет интерфейс для клонирования самого себя, который, как правило, представляет метод Clone()
 - **ConcretePrototype1** и **ConcretePrototype2**: конкретные реализации прототипа. Реализуют метод Clone()
@@ -474,7 +483,7 @@ class ConcretePrototype2 : Prototype
 
 **ПАТТЕРНИ ПОВЕДІНКИ**
 
-1. **Стратегія**
+6. **Стратегія**
 
 Паттерн Стратегия (Strategy) представляет шаблон проектирования, который определяет набор алгоритмов, инкапсулирует каждый из них и обеспечивает их взаимозаменяемость. В зависимости от ситуации мы можем легко заменить один используемый алгоритм другим. При этом замена алгоритма происходит независимо от объекта, который использует данный алгоритм.
 
@@ -485,67 +494,69 @@ class ConcretePrototype2 : Prototype
 - Когда необходимо менять поведение объектов на стадии выполнения программы
 - Когда класс, применяющий определенную функциональность, ничего не должен знать о ее реализации
 
+```
 public interface IStrategy
 
 {
 
-&nbsp;   void Algorithm();
+   void Algorithm();
 
 }
 
-&nbsp;
+
 
 public class ConcreteStrategy1 : IStrategy
 
 {
 
-&nbsp;   public void Algorithm()
+   public void Algorithm()
 
-&nbsp;   {}
+   {}
 
 }
 
-&nbsp;
+
 
 public class ConcreteStrategy2 : IStrategy
 
 {
 
-&nbsp;   public void Algorithm()
+   public void Algorithm()
 
-&nbsp;   {}
+   {}
 
 }
 
-&nbsp;
+
 
 public class Context
 
 {
 
-&nbsp;   public IStrategy ContextStrategy { get; set; }
+   public IStrategy ContextStrategy { get; set; }
 
-&nbsp;
 
-&nbsp;   public Context(IStrategy \_strategy)
 
-&nbsp;   {
+   public Context(IStrategy \_strategy)
 
-&nbsp;       ContextStrategy = \_strategy;
+   {
 
-&nbsp;   }
+       ContextStrategy = \_strategy;
 
-&nbsp;
+   }
 
-&nbsp;   public void ExecuteAlgorithm()
 
-&nbsp;   {
 
-&nbsp;       ContextStrategy.Algorithm();
+   public void ExecuteAlgorithm()
 
-&nbsp;   }
+   {
+
+       ContextStrategy.Algorithm();
+
+   }
 
 }
+```
 
 - Интерфейс IStrategy, который определяет метод Algorithm(). Это общий интерфейс для всех реализующих его алгоритмов. Вместо интерфейса здесь также можно было бы использовать абстрактный класс.
 - Классы ConcreteStrategy1 и ConcreteStrategy, которые реализуют интерфейс IStrategy, предоставляя свою версию метода Algorithm(). Подобных классов-реализаций может быть множество.
@@ -553,7 +564,7 @@ public class Context
 
 В данном случае объект IStrategy заключена в свойстве ContextStrategy, хотя также для нее можно было бы определить приватную переменную, а для динамической установки использовать специальный метод.
 
-1. **Спостерігач**
+7. **Спостерігач**
 
 Паттерн "Наблюдатель" (Observer) представляет поведенческий шаблон проектирования, который использует отношение "один ко многим". В этом отношении есть один наблюдаемый объект и множество наблюдателей. И при изменении наблюдаемого объекта автоматически происходит оповещение всех наблюдателей.
 
@@ -565,15 +576,16 @@ public class Context
 - Когда общая схема взаимодействия объектов предполагает две стороны: одна рассылает сообщения и является главным, другая получает сообщения и реагирует на них. Отделение логики обеих сторон позволяет их рассматривать независимо и использовать отдельно друга от друга.
 - Когда существует один объект, рассылающий сообщения, и множество подписчиков, которые получают сообщения. При этом точное число подписчиков заранее неизвестно и процессе работы программы может изменяться.
 
+```
 interface IObservable
 
 {
 
-&nbsp;   void AddObserver(IObserver o);
+   void AddObserver(IObserver o);
 
-&nbsp;   void RemoveObserver(IObserver o);
+   void RemoveObserver(IObserver o);
 
-&nbsp;   void NotifyObservers();
+   void NotifyObservers();
 
 }
 
@@ -581,55 +593,55 @@ class ConcreteObservable : IObservable
 
 {
 
-&nbsp;   private List&lt;IObserver&gt; observers;
+   private List&lt;IObserver&gt; observers;
 
-&nbsp;   public ConcreteObservable()
+   public ConcreteObservable()
 
-&nbsp;   {
+   {
 
-&nbsp;       observers = new List&lt;IObserver&gt;();
+       observers = new List&lt;IObserver&gt;();
 
-&nbsp;   }
+   }
 
-&nbsp;   public void AddObserver(IObserver o)
+   public void AddObserver(IObserver o)
 
-&nbsp;   {
+   {
 
-&nbsp;       observers.Add(o);
+       observers.Add(o);
 
-&nbsp;   }
+   }
 
-&nbsp;
 
-&nbsp;   public void RemoveObserver(IObserver o)
 
-&nbsp;   {
+   public void RemoveObserver(IObserver o)
 
-&nbsp;       observers.Remove(o);
+   {
 
-&nbsp;   }
+       observers.Remove(o);
 
-&nbsp;
+   }
 
-&nbsp;   public void NotifyObservers()
 
-&nbsp;   {
 
-&nbsp;       foreach (IObserver observer in observers)
+   public void NotifyObservers()
 
-&nbsp;           observer.Update();
+   {
 
-&nbsp;   }
+       foreach (IObserver observer in observers)
+
+           observer.Update();
+
+   }
 
 }
 
-&nbsp;
+
 
 interface IObserver
 
 {
 
-&nbsp;   void Update();
+   void Update();
 
 }
 
@@ -637,13 +649,14 @@ class ConcreteObserver :IObserver
 
 {
 
-&nbsp;   public void Update()
+   public void Update()
 
-&nbsp;   {
+   {
 
-&nbsp;   }
+   }
 
 }
+```
 
 - **IObservable**: представляет наблюдаемый объект. Определяет три метода: AddObserver() (для добавления наблюдателя), RemoveObserver() (удаление набюдателя) и NotifyObservers() (уведомление наблюдателей)
 - **ConcreteObservable**: конкретная реализация интерфейса IObservable. Определяет коллекцию объектов наблюдателей.
@@ -654,7 +667,7 @@ class ConcreteObserver :IObserver
 
 В определенный момент наблюдатель может прекратить наблюдение. И после этого оба объекта - наблюдатель и наблюдаемый могут продолжать существовать в системе независимо друг от друга.
 
-1. **Команда**
+8. **Команда**
 
 Паттерн "Команда" (Command) позволяет инкапсулировать запрос на выполнение определенного действия в виде отдельного объекта. Этот объект запроса на действие и называется командой. При этом объекты, инициирующие запросы на выполнение действия, отделяются от объектов, которые выполняют это действие.
 
@@ -668,13 +681,14 @@ class ConcreteObserver :IObserver
 
 Когда надо поддерживать логгирование изменений в результате запросов. Использование логов может помочь восстановить состояние системы - для этого необходимо будет использовать последовательность запротоколированных команд.
 
+```
 abstract class Command
 
 {
 
-&nbsp;   public abstract void Execute();
+   public abstract void Execute();
 
-&nbsp;   public abstract void Undo();
+   public abstract void Undo();
 
 }
 
@@ -684,33 +698,33 @@ class ConcreteCommand : Command
 
 {
 
-&nbsp;   Receiver receiver;
+   Receiver receiver;
 
-&nbsp;   public ConcreteCommand(Receiver r)
+   public ConcreteCommand(Receiver r)
 
-&nbsp;   {
+   {
 
-&nbsp;       receiver = r;
+       receiver = r;
 
-&nbsp;   }
+   }
 
-&nbsp;   public override void Execute()
+   public override void Execute()
 
-&nbsp;   {
+   {
 
-&nbsp;       receiver.Operation();
+       receiver.Operation();
 
-&nbsp;   }
+   }
 
-&nbsp;
 
-&nbsp;   public override void Undo()
 
-&nbsp;   {}
+   public override void Undo()
+
+   {}
 
 }
 
-&nbsp;
+
 
 // получатель команды
 
@@ -718,9 +732,9 @@ class Receiver
 
 {
 
-&nbsp;   public void Operation()
+   public void Operation()
 
-&nbsp;   { }
+   { }
 
 }
 
@@ -730,31 +744,31 @@ class Invoker
 
 {
 
-&nbsp;   Command command;
+   Command command;
 
-&nbsp;   public void SetCommand(Command c)
+   public void SetCommand(Command c)
 
-&nbsp;   {
+   {
 
-&nbsp;       command = c;
+       command = c;
 
-&nbsp;   }
+   }
 
-&nbsp;   public void Run()
+   public void Run()
 
-&nbsp;   {
+   {
 
-&nbsp;       command.Execute();
+       command.Execute();
 
-&nbsp;   }
+   }
 
-&nbsp;   public void Cancel()
+   public void Cancel()
 
-&nbsp;   {
+   {
 
-&nbsp;       command.Undo();
+       command.Undo();
 
-&nbsp;   }
+   }
 
 }
 
@@ -762,23 +776,24 @@ class Client
 
 {
 
-&nbsp;   void Main()
+   void Main()
 
-&nbsp;   {
+   {
 
-&nbsp;       Invoker invoker = new Invoker();
+       Invoker invoker = new Invoker();
 
-&nbsp;       Receiver receiver = new Receiver();
+       Receiver receiver = new Receiver();
 
-&nbsp;       ConcreteCommand command=new ConcreteCommand(receiver);
+       ConcreteCommand command=new ConcreteCommand(receiver);
 
-&nbsp;       invoker.SetCommand(command);
+       invoker.SetCommand(command);
 
-&nbsp;       invoker.Run();
+       invoker.Run();
 
-&nbsp;   }
+   }
 
 }
+```
 
 - **Command**: интерфейс, представляющий команду. Обычно определяет метод Execute() для выполнения действия, а также нередко включает метод Undo(), реализация которого должна заключаться в отмене действия команды
 - **ConcreteCommand**: конкретная реализация команды, реализует метод Execute(), в котором вызывается определенный метод, определенный в классе Receiver
@@ -790,7 +805,7 @@ class Client
 
 В программах на C# команды находят довольно широкое применение. Так, в технологии WPF и других технологиях, которые используют XAML и подход MVVM, на командах во многом базируется взаимодействие с пользователем. В некоторых архитектурах, например, в архитектуре CQRS, команды являются одним из ключевых компонентов.
 
-1. **Шаблонний метод**
+9. **Шаблонний метод**
 
 Шаблонный метод (Template Method) определяет общий алгоритм поведения подклассов, позволяя им переопределить отдельные шаги этого алгоритма без изменения его структуры.
 
@@ -799,52 +814,54 @@ class Client
 - Когда планируется, что в будущем подклассы должны будут переопределять различные этапы алгоритма без изменения его структуры
 - Когда в классах, реализующим схожий алгоритм, происходит дублирование кода. Вынесение общего кода в шаблонный метод уменьшит его дублирование в подклассах.
 
+```
 abstract class AbstractClass
 
 {
 
-&nbsp;   public void TemplateMethod()
+   public void TemplateMethod()
 
-&nbsp;   {
+   {
 
-&nbsp;       Operation1();
+       Operation1();
 
-&nbsp;       Operation2();
+       Operation2();
 
-&nbsp;   }
+   }
 
-&nbsp;   public abstract void Operation1();
+   public abstract void Operation1();
 
-&nbsp;   public abstract void Operation2();
+   public abstract void Operation2();
 
 }
 
-&nbsp;
+
 
 class ConcreteClass : AbstractClass
 
 {
 
-&nbsp;   public override void Operation1()
+   public override void Operation1()
 
-&nbsp;   {
+   {
 
-&nbsp;   }
+   }
 
-&nbsp;
 
-&nbsp;   public override void Operation2()
 
-&nbsp;   {
+   public override void Operation2()
 
-&nbsp;   }
+   {
+
+   }
 
 }
+```
 
 - **AbstractClass**: определяет шаблонный метод TemplateMethod(), который реализует алгоритм. Алгоритм может состоять из последовательности вызовов других методов, часть из которых может быть абстрактными и должны быть переопределены в классах-наследниках. При этом сам метод TemplateMethod(), представляющий структуру алгоритма, переопределяться не должен.
 - **ConcreteClass**: подкласс, который может переопределять различные методы родительского класса.
 
-1. **Ітератор**
+10. **Ітератор**
 
 Паттерн Итератор (Iterator) предоставляет абстрактный интерфейс для последовательного доступа ко всем элементам составного объекта без раскрытия его внутренней структуры.
 
@@ -860,91 +877,92 @@ class ConcreteClass : AbstractClass
 - Когда имеется набор составных объектов, и надо обеспечить единый интерфейс для их перебора
 - Когда необходимо предоставить несколько альтернативных вариантов перебора одного и того же объекта
 
+```
 class Client
 
 {
 
-&nbsp;   public void Main()
+   public void Main()
 
-&nbsp;   {
+   {
 
-&nbsp;       Aggregate a = new ConcreteAggregate();
+       Aggregate a = new ConcreteAggregate();
 
-&nbsp;
 
-&nbsp;       Iterator i = a.CreateIterator();
 
-&nbsp;
+       Iterator i = a.CreateIterator();
 
-&nbsp;       object item = i.First();
 
-&nbsp;       while (!i.IsDone())
 
-&nbsp;       {
+       object item = i.First();
 
-&nbsp;           item = i.Next();
+       while (!i.IsDone())
 
-&nbsp;       }
+       {
 
-&nbsp;   }
+           item = i.Next();
+
+       }
+
+   }
 
 }
 
-&nbsp;
+
 
 abstract class Aggregate
 
 {
 
-&nbsp;   public abstract Iterator CreateIterator();
+   public abstract Iterator CreateIterator();
 
-&nbsp;   public abstract int Count { get; protected set; }
+   public abstract int Count { get; protected set; }
 
-&nbsp;   public abstract object this\[int index\] { get; set; }
+   public abstract object this\[int index\] { get; set; }
 
 }
 
-&nbsp;
+
 
 class ConcreteAggregate : Aggregate
 
 {
 
-&nbsp;   private readonly ArrayList \_items = new ArrayList();
+   private readonly ArrayList \_items = new ArrayList();
 
-&nbsp;
 
-&nbsp;   public override Iterator CreateIterator()
 
-&nbsp;   {
+   public override Iterator CreateIterator()
 
-&nbsp;       return new ConcreteIterator(this);
+   {
 
-&nbsp;   }
+       return new ConcreteIterator(this);
 
-&nbsp;
+   }
 
-&nbsp;   public override int Count
 
-&nbsp;   {
 
-&nbsp;       get { return \_items.Count; }
+   public override int Count
 
-&nbsp;       protected set { }
+   {
 
-&nbsp;   }
+       get { return \_items.Count; }
 
-&nbsp;
+       protected set { }
 
-&nbsp;   public override object this\[int index\]
+   }
 
-&nbsp;   {
 
-&nbsp;       get { return \_items\[index\]; }
 
-&nbsp;       set { \_items.Insert(index, value); }
+   public override object this\[int index\]
 
-&nbsp;   }
+   {
+
+       get { return \_items\[index\]; }
+
+       set { \_items.Insert(index, value); }
+
+   }
 
 }
 
@@ -952,95 +970,96 @@ abstract class Iterator
 
 {
 
-&nbsp;   public abstract object First();
+   public abstract object First();
 
-&nbsp;   public abstract object Next();
+   public abstract object Next();
 
-&nbsp;   public abstract bool IsDone();
+   public abstract bool IsDone();
 
-&nbsp;   public abstract object CurrentItem();
+   public abstract object CurrentItem();
 
 }
 
-&nbsp;
+
 
 class ConcreteIterator : Iterator
 
 {
 
-&nbsp;   private readonly Aggregate \_aggregate;
+   private readonly Aggregate \_aggregate;
 
-&nbsp;   private int \_current;
+   private int \_current;
 
-&nbsp;
 
-&nbsp;   public ConcreteIterator(Aggregate aggregate)
 
-&nbsp;   {
+   public ConcreteIterator(Aggregate aggregate)
 
-&nbsp;       this.\_aggregate = aggregate;
+   {
 
-&nbsp;   }
+       this.\_aggregate = aggregate;
 
-&nbsp;
+   }
 
-&nbsp;   public override object First()
 
-&nbsp;   {
 
-&nbsp;       return \_aggregate\[0\];
+   public override object First()
 
-&nbsp;   }
+   {
 
-&nbsp;
+       return \_aggregate\[0\];
 
-&nbsp;   public override object Next()
+   }
 
-&nbsp;   {
 
-&nbsp;       object ret = null;
 
-&nbsp;
+   public override object Next()
 
-&nbsp;       \_current++;
+   {
 
-&nbsp;
+       object ret = null;
 
-&nbsp;       if (\_current < \_aggregate.Count)
 
-&nbsp;       {
 
-&nbsp;           ret = \_aggregate\[\_current\];
+       \_current++;
 
-&nbsp;       }
 
-&nbsp;
 
-&nbsp;       return ret;
+       if (\_current < \_aggregate.Count)
 
-&nbsp;   }
+       {
 
-&nbsp;
+           ret = \_aggregate\[\_current\];
 
-&nbsp;   public override object CurrentItem()
+       }
 
-&nbsp;   {
 
-&nbsp;       return \_aggregate\[\_current\];
 
-&nbsp;   }
+       return ret;
 
-&nbsp;
+   }
 
-&nbsp;   public override bool IsDone()
 
-&nbsp;   {
 
-&nbsp;       return \_current >= \_aggregate.Count;
+   public override object CurrentItem()
 
-&nbsp;   }
+   {
+
+       return \_aggregate\[\_current\];
+
+   }
+
+
+
+   public override bool IsDone()
+
+   {
+
+       return \_current >= \_aggregate.Count;
+
+   }
 
 }
+```
 
 - **Iterator**: определяет интерфейс для обхода составных объектов
 - **Aggregate**: определяет интерфейс для создания объекта-итератора
@@ -1048,7 +1067,7 @@ class ConcreteIterator : Iterator
 - **ConcreteAggregate**: конкретная реализация Aggregate. Хранит элементы, которые надо будет перебирать
 - **Client**: использует объект Aggregate и итератор для его обхода
 
-1. **Стан (State)**
+11. **Стан (State)**
 
 Состояние (State) - шаблон проектирования, который позволяет объекту изменять свое поведение в зависимости от внутреннего состояния.
 
@@ -1057,21 +1076,22 @@ class ConcreteIterator : Iterator
 - Когда поведение объекта должно зависеть от его состояния и может изменяться динамически во время выполнения
 - Когда в коде методов объекта используются многочисленные условные конструкции, выбор которых зависит от текущего состояния объекта
 
+```
 class Program
 
 {
 
-&nbsp;   static void Main()
+   static void Main()
 
-&nbsp;   {
+   {
 
-&nbsp;       Context context = new Context(new StateA());
+       Context context = new Context(new StateA());
 
-&nbsp;       context.Request(); // Переход в состояние StateB
+       context.Request(); // Переход в состояние StateB
 
-&nbsp;       context.Request();  // Переход в состояние StateA
+       context.Request();  // Переход в состояние StateA
 
-&nbsp;   }
+   }
 
 }
 
@@ -1079,7 +1099,7 @@ abstract class State
 
 {
 
-&nbsp;   public abstract void Handle(Context context);
+   public abstract void Handle(Context context);
 
 }
 
@@ -1087,13 +1107,13 @@ class StateA : State
 
 {
 
-&nbsp;   public override void Handle(Context context)
+   public override void Handle(Context context)
 
-&nbsp;   {
+   {
 
-&nbsp;       context.State = new StateB();
+       context.State = new StateB();
 
-&nbsp;   }
+   }
 
 }
 
@@ -1101,47 +1121,48 @@ class StateB : State
 
 {
 
-&nbsp;   public override void Handle(Context context)
+   public override void Handle(Context context)
 
-&nbsp;   {
+   {
 
-&nbsp;       context.State = new StateA();
+       context.State = new StateA();
 
-&nbsp;   }
+   }
 
 }
 
-&nbsp;
+
 
 class Context
 
 {
 
-&nbsp;   public State State { get; set; }
+   public State State { get; set; }
 
-&nbsp;   public Context(State state)
+   public Context(State state)
 
-&nbsp;   {
+   {
 
-&nbsp;       this.State = state;
+       this.State = state;
 
-&nbsp;   }
+   }
 
-&nbsp;   public void Request()
+   public void Request()
 
-&nbsp;   {
+   {
 
-&nbsp;       this.State.Handle(this);
+       this.State.Handle(this);
 
-&nbsp;   }
+   }
 
 }
+```
 
 - **State**: определяет интерфейс состояния
 - Классы **StateA** и **StateB** - конкретные реализации состояний
 - **Context**: представляет объект, поведение которого должно динамически изменяться в соответствии с состоянием. Выполнение же конкретных действий делегируется объекту состояния
 
-1. **Ланцюг обовязків (Chain of responsibility)**
+12. **Ланцюг обовязків (Chain of responsibility)**
 
 Цепочка Обязанностей (Chain of responsibility) - поведенческий шаблон проектирования, который позволяет избежать жесткой привязки отправителя запроса к получателю. Все возможные обработчики запроса образуют цепочку, а сам запрос перемещается по этой цепочке. Каждый объект в этой цепочке при получении запроса выбирает, либо закончить обработку запроса, либо передать запрос на обработку следующему по цепочке объекту.
 
@@ -1150,24 +1171,24 @@ class Context
 - Когда имеется более одного объекта, который может обработать определенный запрос
 - Когда надо передать запрос на выполнение одному из нескольких объект, точно не определяя, какому именно объекту
 - Когда набор объектов задается динамически
-
+```
 class Client
 
 {
 
-&nbsp;   void Main()
+   void Main()
 
-&nbsp;   {
+   {
 
-&nbsp;       Handler h1 = new ConcreteHandler1();
+       Handler h1 = new ConcreteHandler1();
 
-&nbsp;       Handler h2 = new ConcreteHandler2();
+       Handler h2 = new ConcreteHandler2();
 
-&nbsp;       h1.Successor = h2;
+       h1.Successor = h2;
 
-&nbsp;       h1.HandleRequest(2);
+       h1.HandleRequest(2);
 
-&nbsp;   }
+   }
 
 }
 
@@ -1175,84 +1196,84 @@ abstract class Handler
 
 {
 
-&nbsp;   public Handler Successor { get; set; }
+   public Handler Successor { get; set; }
 
-&nbsp;   public abstract void HandleRequest(int condition);
+   public abstract void HandleRequest(int condition);
 
 }
 
-&nbsp;
+
 
 class ConcreteHandler1 : Handler
 
 {
 
-&nbsp;   public override void HandleRequest(int condition)
+   public override void HandleRequest(int condition)
 
-&nbsp;   {
+   {
 
-&nbsp;       // некоторая обработка запроса
+       // некоторая обработка запроса
 
-&nbsp;
 
-&nbsp;       if (condition==1)
 
-&nbsp;       {
+       if (condition==1)
 
-&nbsp;           // завершение выполнения запроса;
+       {
 
-&nbsp;       }
+           // завершение выполнения запроса;
 
-&nbsp;       // передача запроса дальше по цепи при наличии в ней обработчиков
+       }
 
-&nbsp;       else if (Successor != null)
+       // передача запроса дальше по цепи при наличии в ней обработчиков
 
-&nbsp;       {
+       else if (Successor != null)
 
-&nbsp;           Successor.HandleRequest(condition);
+       {
 
-&nbsp;       }
+           Successor.HandleRequest(condition);
 
-&nbsp;   }
+       }
+
+   }
 
 }
 
-&nbsp;
+
 
 class ConcreteHandler2 : Handler
 
 {
 
-&nbsp;   public override void HandleRequest(int condition)
+   public override void HandleRequest(int condition)
 
-&nbsp;   {
+   {
 
-&nbsp;       // некоторая обработка запроса
+       // некоторая обработка запроса
 
-&nbsp;
 
-&nbsp;       if (condition==2)
 
-&nbsp;       {
+       if (condition==2)
 
-&nbsp;           // завершение выполнения запроса;
+       {
 
-&nbsp;       }
+           // завершение выполнения запроса;
 
-&nbsp;       // передача запроса дальше по цепи при наличии в ней обработчиков
+       }
 
-&nbsp;       else if (Successor != null)
+       // передача запроса дальше по цепи при наличии в ней обработчиков
 
-&nbsp;       {
+       else if (Successor != null)
 
-&nbsp;           Successor.HandleRequest(condition);
+       {
 
-&nbsp;       }
+           Successor.HandleRequest(condition);
 
-&nbsp;   }
+       }
+
+   }
 
 }
-
+```
 - **Handler**: определяет интерфейс для обработки запроса. Также может определять ссылку на следующий обработчик запроса
 - **ConcreteHandler1** и **ConcreteHandler2**: конкретные обработчики, которые реализуют функционал для обработки запроса. При невозможности обработки и наличия ссылки на следующий обработчик, передают запрос этому обработчику
 
@@ -1269,35 +1290,35 @@ class ConcreteHandler2 : Handler
 
 Использование паттерна довольно часто встречается в нашей жизни. Достаточно распространена ситуация, когда чиновники перекладывают друг на друга по цепочке выполнения какого-нибудь дела, и оно в конце концов оказывается не выполненным. Или когда мы идем в поликлинику, но при этом точно не знаем характер заболевания. В этом случае мы идем к терапевту, а он в зависимости от заболевания уже может либо сам лечить, либо отправить на лечение другим специализированным врачам.
 
-1. **Інтерпретатор**
+13. **Інтерпретатор**
 
 Паттерн Интерпретатор (Interpreter) определяет представление грамматики для заданного языка и интерпретатор предложений этого языка. Как правило, данный шаблон проектирования применяется для часто повторяющихся операций.
 
 Хотя паттерн требует понимания теории формальных языков и грамматик, на самом деле он не так сложен в понимании.
-
+```
 class Client
 
 {
 
-&nbsp;   void Main()
+   void Main()
 
-&nbsp;   {
+   {
 
-&nbsp;       Context context = new Context();
+       Context context = new Context();
 
-&nbsp;
 
-&nbsp;       var expression = new NonterminalExpression();
 
-&nbsp;       expression.Interpret(context);
+       var expression = new NonterminalExpression();
 
-&nbsp;
+       expression.Interpret(context);
 
-&nbsp;   }
+
+
+   }
 
 }
 
-&nbsp;
+
 
 class Context
 
@@ -1305,50 +1326,50 @@ class Context
 
 }
 
-&nbsp;
+
 
 abstract class AbstractExpression
 
 {
 
-&nbsp;   public abstract void Interpret(Context context);
+   public abstract void Interpret(Context context);
 
 }
 
-&nbsp;
+
 
 class TerminalExpression : AbstractExpression
 
 {
 
-&nbsp;   public override void Interpret(Context context)
+   public override void Interpret(Context context)
 
-&nbsp;   {
+   {
 
-&nbsp;   }
+   }
 
 }
 
-&nbsp;
+
 
 class NonterminalExpression : AbstractExpression
 
 {
 
-&nbsp;   AbstractExpression expression1;
+   AbstractExpression expression1;
 
-&nbsp;   AbstractExpression expression2;
+   AbstractExpression expression2;
 
-&nbsp;   public override void Interpret(Context context)
+   public override void Interpret(Context context)
 
-&nbsp;   {
+   {
 
-&nbsp;
 
-&nbsp;   }
+
+   }
 
 }
-
+```
 - **AbstractExpression**: определяет интерфейс выражения, объявляет метод Interpret()
 - **TerminalExpression**: терминальное выражение, реализует метод Interpret() для терминальных символов грамматики. Для каждого символа грамматики создается свой объект TerminalExpression
 - **NonterminalExpression**: нетерминальное выражение, представляет правило грамматики. Для каждого отдельного правила грамматики создается свой объект NonterminalExpression.
@@ -1357,7 +1378,7 @@ class NonterminalExpression : AbstractExpression
 
 Методы Interpret в нетерминальных выражениях позволяют реализовать правила грамматики. При этом мы легко может добавить новые правила грамматики, определив новые объекты NonterminalExpression со своей реализацией метода Interpret. Однако данный паттерн подходит только для тех случаев, когда правила грамматики относительно простые. В более сложных случаях следует выбирать другие способы проектирования приложения.
 
-1. **Посередник (Mediator)**
+14. **Посередник (Mediator)**
 
 Паттерн Посредник (Mediator) представляет такой шаблон проектирования, который обеспечивает взаимодействие множества объектов без необходимости ссылаться друг на друга. Тем самым достигается слабосвязанность взаимодействующих объектов.
 
@@ -1365,127 +1386,128 @@ class NonterminalExpression : AbstractExpression
 
 - Когда имеется множество взаимосвязаных объектов, связи между которыми сложны и запутаны.
 - Когда необходимо повторно использовать объект, однако повторное использование затруднено в силу сильных связей с другими объектами.
-
+```
 abstract class Mediator
 
 {
 
-&nbsp;   public abstract void Send(string msg, Colleague colleague);
+   public abstract void Send(string msg, Colleague colleague);
 
 }
 
-&nbsp;
+
 
 abstract class Colleague
 
 {
 
-&nbsp;   protected Mediator mediator;
+   protected Mediator mediator;
 
-&nbsp;
 
-&nbsp;   public Colleague(Mediator mediator)
 
-&nbsp;   {
+   public Colleague(Mediator mediator)
 
-&nbsp;       this.mediator = mediator;
+   {
 
-&nbsp;   }
+       this.mediator = mediator;
+
+   }
 
 }
 
-&nbsp;
+
 
 class ConcreteColleague1 : Colleague
 
 {
 
-&nbsp;   public ConcreteColleague1(Mediator mediator)
+   public ConcreteColleague1(Mediator mediator)
 
-&nbsp;       : base(mediator)
+       : base(mediator)
 
-&nbsp;   { }
+   { }
 
-&nbsp;
 
-&nbsp;   public void Send(string message)
 
-&nbsp;   {
+   public void Send(string message)
 
-&nbsp;       mediator.Send(message, this);
+   {
 
-&nbsp;   }
+       mediator.Send(message, this);
 
-&nbsp;
+   }
 
-&nbsp;   public void Notify(string message)
 
-&nbsp;   { }
+
+   public void Notify(string message)
+
+   { }
 
 }
 
-&nbsp;
+
 
 class ConcreteColleague2 : Colleague
 
 {
 
-&nbsp;   public ConcreteColleague2(Mediator mediator)
+   public ConcreteColleague2(Mediator mediator)
 
-&nbsp;       : base(mediator)
+       : base(mediator)
 
-&nbsp;   { }
+   { }
 
-&nbsp;
 
-&nbsp;   public void Send(string message)
 
-&nbsp;   {
+   public void Send(string message)
 
-&nbsp;       mediator.Send(message, this);
+   {
 
-&nbsp;   }
+       mediator.Send(message, this);
 
-&nbsp;
+   }
 
-&nbsp;   public void Notify(string message)
 
-&nbsp;   { }
+
+   public void Notify(string message)
+
+   { }
 
 }
 
-&nbsp;
+
 
 class ConcreteMediator : Mediator
 
 {
 
-&nbsp;   public ConcreteColleague1 Colleague1 { get; set; }
+   public ConcreteColleague1 Colleague1 { get; set; }
 
-&nbsp;   public ConcreteColleague2 Colleague2 { get; set; }
+   public ConcreteColleague2 Colleague2 { get; set; }
 
-&nbsp;   public override void Send(string msg, Colleague colleague)
+   public override void Send(string msg, Colleague colleague)
 
-&nbsp;   {
+   {
 
-&nbsp;       if (Colleague1 == colleague)
+       if (Colleague1 == colleague)
 
-&nbsp;           Colleague2.Notify(msg);
+           Colleague2.Notify(msg);
 
-&nbsp;       else
+       else
 
-&nbsp;           Colleague1.Notify(msg);
+           Colleague1.Notify(msg);
 
-&nbsp;   }
+   }
 
 }
 
+```
 - **Mediator**: представляет интерфейс для взаимодействия с объектами Colleague
 - **Colleague**: представляет интерфейс для взаимодействия с объектом Mediator
 - **ConcreteColleague1** и **ConcreteColleague2**: конкретные классы коллег, которые обмениваются друг с другом через объект Mediator
 - **ConcreteMediator**: конкретный посредник, реализующий интерфейс типа Mediator
 
-1. **Зберігач (Memento)**
+15. **Зберігач (Memento)**
 
 Паттерн Хранитель (Memento) позволяет выносить внутреннее состояние объекта за его пределы для последующего возможного восстановления объекта без нарушения принципа инкапсуляции.
 
@@ -1495,64 +1517,64 @@ class ConcreteMediator : Mediator
 - Когда сохранение состояния должно проходить без нарушения принципа инкапсуляции
 
 То есть ключевыми понятиями для данного паттерна являются **сохранение внутреннего состояния** и **инкапсуляция**, и важно соблюсти баланс между ними. Ведь, как правило, если мы не нарушаем инкапсуляцию, то состояние объекта хранится в объекте в приватных переменных. И не всегда для доступа к этим переменным есть методы или свойства с сеттерами и геттерами. Например, в игре происходит управление героем, все состояние которого заключено в нем самом - оружие героя, показатель жизней, силы, какие-то другие показатели. И нередко может возникнуть ситуация, сохранить все эти показатели во вне, чтобы в будущем можно было откатиться к предыдущему уровню и начать игру заново. В этом случае как раз и может помочь паттерн Хранитель.
-
+```
 class Memento
 
 {
 
-&nbsp;   public string State { get; private set;}
+   public string State { get; private set;}
 
-&nbsp;   public Memento(string state)
+   public Memento(string state)
 
-&nbsp;   {
+   {
 
-&nbsp;       this.State = state;
+       this.State = state;
 
-&nbsp;   }
+   }
 
 }
 
-&nbsp;
+
 
 class Caretaker
 
 {
 
-&nbsp;   public Memento Memento { get; set; }
+   public Memento Memento { get; set; }
 
 }
 
-&nbsp;
+
 
 class Originator
 
 {
 
-&nbsp;   public string State { get; set; }
+   public string State { get; set; }
 
-&nbsp;   public void SetMemento(Memento memento)
+   public void SetMemento(Memento memento)
 
-&nbsp;   {
+   {
 
-&nbsp;       State = memento.State;
+       State = memento.State;
 
-&nbsp;   }
+   }
 
-&nbsp;   public Memento CreateMemento()
+   public Memento CreateMemento()
 
-&nbsp;   {
+   {
 
-&nbsp;       return new Memento(State);
+       return new Memento(State);
 
-&nbsp;   }
+   }
 
 }
-
+```
 - **Memento**: хранитель, который сохраняет состояние объекта Originator и предоставляет полный доступ только этому объекту Originator
 - **Originator**: создает объект хранителя для сохранения своего состояния
 - **Caretaker**: выполняет только функцию хранения объекта Memento, в то же время у него нет полного доступа к хранителю и никаких других операций над хранителем, кроме собственно сохранения, он не производит
 
-1. **Візитор**
+16. **Візитор**
 
 Паттерн Посетитель (Visitor) позволяет определить операцию для объектов других классов без изменения этих классов.
 
@@ -1563,62 +1585,62 @@ class Originator
 - Когда имеется много объектов разнородных классов с разными интерфейсами, и требуется выполнить ряд операций над каждым из этих объектов
 - Когда классам необходимо добавить одинаковый набор операций без изменения этих классов
 - Когда часто добавляются новые операции к классам, при этом общая структура классов стабильна и практически не изменяется
-
+```
 class Client
 
 {
 
-&nbsp;   void Main()
+   void Main()
 
-&nbsp;   {
+   {
 
-&nbsp;       var structure = new ObjectStructure();
+       var structure = new ObjectStructure();
 
-&nbsp;       structure.Add(new ElementA());
+       structure.Add(new ElementA());
 
-&nbsp;       structure.Add(new ElementB());
+       structure.Add(new ElementB());
 
-&nbsp;       structure.Accept(new ConcreteVisitor1());
+       structure.Accept(new ConcreteVisitor1());
 
-&nbsp;       structure.Accept(new ConcreteVisitor2());
+       structure.Accept(new ConcreteVisitor2());
 
-&nbsp;   }
+   }
 
 }
 
-&nbsp;
+
 
 abstract class Visitor
 
 {
 
-&nbsp;   public abstract void VisitElementA(ElementA elemA);
+   public abstract void VisitElementA(ElementA elemA);
 
-&nbsp;   public abstract void VisitElementB(ElementB elemB);
+   public abstract void VisitElementB(ElementB elemB);
 
 }
 
-&nbsp;
+
 
 class ConcreteVisitor1 : Visitor
 
 {
 
-&nbsp;   public override void VisitElementA(ElementA elementA)
+   public override void VisitElementA(ElementA elementA)
 
-&nbsp;   {
+   {
 
-&nbsp;       elementA.OperationA();
+       elementA.OperationA();
 
-&nbsp;   }
+   }
 
-&nbsp;   public override void VisitElementB(ElementB elementB)
+   public override void VisitElementB(ElementB elementB)
 
-&nbsp;   {
+   {
 
-&nbsp;           elementB.OperationB();
+           elementB.OperationB();
 
-&nbsp;   }
+   }
 
 }
 
@@ -1626,111 +1648,112 @@ class ConcreteVisitor2 : Visitor
 
 {
 
-&nbsp;   public override void VisitElementA(ElementA elementA)
+   public override void VisitElementA(ElementA elementA)
 
-&nbsp;   {
+   {
 
-&nbsp;       elementA.OperationA();
+       elementA.OperationA();
 
-&nbsp;   }
+   }
 
-&nbsp;   public override void VisitElementB(ElementB elementB)
+   public override void VisitElementB(ElementB elementB)
 
-&nbsp;   {
+   {
 
-&nbsp;       elementB.OperationB();
+       elementB.OperationB();
 
-&nbsp;   }
+   }
 
 }
 
-&nbsp;
+
 
 class ObjectStructure
 
 {
 
-&nbsp;   List&lt;Element&gt; elements = new List&lt;Element&gt;();
+   List&lt;Element&gt; elements = new List&lt;Element&gt;();
 
-&nbsp;   public void Add(Element element)
+   public void Add(Element element)
 
-&nbsp;   {
+   {
 
-&nbsp;       elements.Add(element);
+       elements.Add(element);
 
-&nbsp;   }
+   }
 
-&nbsp;   public void Remove(Element element)
+   public void Remove(Element element)
 
-&nbsp;   {
+   {
 
-&nbsp;       elements.Remove(element);
+       elements.Remove(element);
 
-&nbsp;   }
+   }
 
-&nbsp;   public void Accept(Visitor visitor)
+   public void Accept(Visitor visitor)
 
-&nbsp;   {
+   {
 
-&nbsp;       foreach (Element element in elements)
+       foreach (Element element in elements)
 
-&nbsp;           element.Accept(visitor);
+           element.Accept(visitor);
 
-&nbsp;   }
+   }
 
 }
 
-&nbsp;
+
 
 abstract class Element
 
 {
 
-&nbsp;   public abstract void Accept(Visitor visitor);
+   public abstract void Accept(Visitor visitor);
 
-&nbsp;   public string SomeState { get; set; }
+   public string SomeState { get; set; }
 
 }
 
-&nbsp;
+
 
 class ElementA : Element
 
 {
 
-&nbsp;   public override void Accept(Visitor visitor)
+   public override void Accept(Visitor visitor)
 
-&nbsp;   {
+   {
 
-&nbsp;       visitor.VisitElementA(this);
+       visitor.VisitElementA(this);
 
-&nbsp;   }
+   }
 
-&nbsp;   public void OperationA()
+   public void OperationA()
 
-&nbsp;   { }
+   { }
 
 }
 
-&nbsp;
+
 
 class ElementB : Element
 
 {
 
-&nbsp;   public override void Accept(Visitor visitor)
+   public override void Accept(Visitor visitor)
 
-&nbsp;   {
+   {
 
-&nbsp;       visitor.VisitElementB(this);
+       visitor.VisitElementB(this);
 
-&nbsp;   }
+   }
 
-&nbsp;   public void OperationB()
+   public void OperationB()
 
-&nbsp;   { }
+   { }
 
 }
+```
 
 - **Visitor**: интерфейс посетителя, который определяет метод Visit() для каждого объекта Element
 - **ConcreteVisitor1 / ConcreteVisitor2**: конкретные классы посетителей, реализуют интерфейс, определенный в Visitor.
@@ -1744,7 +1767,7 @@ class ElementB : Element
 
 **СТРУКТУРНІ ПАТТЕРНИ**
 
-1. **Декоратор**
+17. **Декоратор**
 
 Декоратор (Decorator) представляет структурный шаблон проектирования, который позволяет динамически подключать к объекту дополнительную функциональность.
 
@@ -1755,12 +1778,12 @@ class ElementB : Element
 Когда надо динамически добавлять к объекту новые функциональные возможности. При этом данные возможности могут быть сняты с объекта
 
 Когда применение наследования неприемлемо. Например, если нам надо определить множество различных функциональностей и для каждой функциональности наследовать отдельный класс, то структура классов может очень сильно разрастись. Еще больше она может разрастись, если нам необходимо создать классы, реализующие все возможные сочетания добавляемых функциональностей.
-
+```
 abstract class Component
 
 {
 
-&nbsp;   public abstract void Operation();
+   public abstract void Operation();
 
 }
 
@@ -1768,9 +1791,9 @@ class ConcreteComponent : Component
 
 {
 
-&nbsp;   public override void Operation()
+   public override void Operation()
 
-&nbsp;   {}
+   {}
 
 }
 
@@ -1778,29 +1801,29 @@ abstract class Decorator : Component
 
 {
 
-&nbsp;   protected Component component;
+   protected Component component;
 
-&nbsp;
 
-&nbsp;   public void SetComponent(Component component)
 
-&nbsp;   {
+   public void SetComponent(Component component)
 
-&nbsp;       this.component = component;
+   {
 
-&nbsp;   }
+       this.component = component;
 
-&nbsp;
+   }
 
-&nbsp;   public override void Operation()
 
-&nbsp;   {
 
-&nbsp;       if (component != null)
+   public override void Operation()
 
-&nbsp;           component.Operation();
+   {
 
-&nbsp;   }
+       if (component != null)
+
+           component.Operation();
+
+   }
 
 }
 
@@ -1808,13 +1831,13 @@ class ConcreteDecoratorA : Decorator
 
 {
 
-&nbsp;   public override void Operation()
+   public override void Operation()
 
-&nbsp;   {
+   {
 
-&nbsp;       base.Operation();
+       base.Operation();
 
-&nbsp;   }
+   }
 
 }
 
@@ -1822,16 +1845,16 @@ class ConcreteDecoratorB : Decorator
 
 {
 
-&nbsp;   public override void Operation()
+   public override void Operation()
 
-&nbsp;   {
+   {
 
-&nbsp;       base.Operation();
+       base.Operation();
 
-&nbsp;   }
+   }
 
 }
-
+```
 - **Component**: абстрактный класс, который определяет интерфейс для наследуемых объектов
 - **ConcreteComponent**: конкретная реализация компонента, в которую с помощью декоратора добавляется новая функциональность
 - **Decorator**: собственно декоратор, реализуется в виде абстрактного класса и имеет тот же базовый класс, что и декорируемые объекты. Поэтому базовый класс Component должен быть по возможности легким и определять только базовый интерфейс.
@@ -1840,7 +1863,7 @@ class ConcreteDecoratorB : Decorator
 
 - Классы **ConcreteDecoratorA** и **ConcreteDecoratorB** представляют дополнительные функциональности, которыми должен быть расширен объект ConcreteComponent.
 
-1. **Адаптер**
+18. **Адаптер**
 
 Паттерн Адаптер (Adapter) предназначен для преобразования интерфейса одного класса в интерфейс другого. Благодаря реализации данного паттерна мы можем использовать вместе классы с несовместимыми интерфейсами.
 
@@ -1848,18 +1871,18 @@ class ConcreteDecoratorB : Decorator
 
 - Когда необходимо использовать имеющийся класс, но его интерфейс не соответствует потребностям
 - Когда надо использовать уже существующий класс совместно с другими классами, интерфейсы которых не совместимы
-
+```
 class Client
 
 {
 
-&nbsp;   public void Request(Target target)
+   public void Request(Target target)
 
-&nbsp;   {
+   {
 
-&nbsp;       target.Request();
+       target.Request();
 
-&nbsp;   }
+   }
 
 }
 
@@ -1869,13 +1892,13 @@ class Target
 
 {
 
-&nbsp;   public virtual void Request()
+   public virtual void Request()
 
-&nbsp;   {}
+   {}
 
 }
 
-&nbsp;
+
 
 // Адаптер
 
@@ -1883,21 +1906,21 @@ class Adapter : Target
 
 {
 
-&nbsp;   private Adaptee adaptee = new Adaptee();
+   private Adaptee adaptee = new Adaptee();
 
-&nbsp;
 
-&nbsp;   public override void Request()
 
-&nbsp;   {
+   public override void Request()
 
-&nbsp;       adaptee.SpecificRequest();
+   {
 
-&nbsp;   }
+       adaptee.SpecificRequest();
+
+   }
 
 }
 
-&nbsp;
+
 
 // Адаптируемый класс
 
@@ -1905,12 +1928,12 @@ class Adaptee
 
 {
 
-&nbsp;   public void SpecificRequest()
+   public void SpecificRequest()
 
-&nbsp;   {}
+   {}
 
 }
-
+```
 - **Target**: представляет объекты, которые используются клиентом
 - **Client**: использует объекты Target для реализации своих задач
 - **Adaptee**: представляет адаптируемый класс, который мы хотели бы использовать у клиента вместо объектов Target
@@ -1918,7 +1941,7 @@ class Adaptee
 
 То есть клиент ничего не знает об Adaptee, он знает и использует только объекты Target. И благодаря адаптеру мы можем на клиенте использовать объекты Adaptee как Target
 
-1. **Фасад**
+19. **Фасад**
 
 Фасад (Facade) представляет шаблон проектирования, который позволяет скрыть сложность системы с помощью предоставления упрощенного интерфейса для взаимодействия с ней.
 
@@ -1927,14 +1950,14 @@ class Adaptee
 - Когда имеется сложная система, и необходимо упростить с ней работу. Фасад позволит определить одну точку взаимодействия между клиентом и системой.
 - Когда надо уменьшить количество зависимостей между клиентом и сложной системой. Фасадные объекты позволяют отделить, изолировать компоненты системы от клиента и развивать и работать с ними независимо.
 - Когда нужно определить подсистемы компонентов в сложной системе. Создание фасадов для компонентов каждой отдельной подсистемы позволит упростить взаимодействие между ними и повысить их независимость друг от друга.
-
+```
 class SubsystemA
 
 {
 
-&nbsp;   public void A1()
+   public void A1()
 
-&nbsp;   {}
+   {}
 
 }
 
@@ -1942,9 +1965,9 @@ class SubsystemB
 
 {
 
-&nbsp;   public void B1()
+   public void B1()
 
-&nbsp;   {}
+   {}
 
 }
 
@@ -1952,87 +1975,87 @@ class SubsystemC
 
 {
 
-&nbsp;   public void C1()
+   public void C1()
 
-&nbsp;   {}
+   {}
 
 }
 
-&nbsp;
+
 
 public class Facade
 
 {
 
-&nbsp;   SubsystemA subsystemA;
+   SubsystemA subsystemA;
 
-&nbsp;   SubsystemB subsystemB;
+   SubsystemB subsystemB;
 
-&nbsp;   SubsystemC subsystemC;
+   SubsystemC subsystemC;
 
-&nbsp;
 
-&nbsp;   public Facade(SubsystemA sa, SubsystemB sb, SubsystemC sc)
 
-&nbsp;   {
+   public Facade(SubsystemA sa, SubsystemB sb, SubsystemC sc)
 
-&nbsp;       subsystemA = sa;
+   {
 
-&nbsp;       subsystemB = sb;
+       subsystemA = sa;
 
-&nbsp;       subsystemC = sc;
+       subsystemB = sb;
 
-&nbsp;   }
+       subsystemC = sc;
 
-&nbsp;   public void Operation1()
+   }
 
-&nbsp;   {
+   public void Operation1()
 
-&nbsp;       subsystemA.A1();
+   {
 
-&nbsp;       subsystemB.B1();
+       subsystemA.A1();
 
-&nbsp;       subsystemC.C1();
+       subsystemB.B1();
 
-&nbsp;   }
+       subsystemC.C1();
 
-&nbsp;   public void Operation2()
+   }
 
-&nbsp;   {
+   public void Operation2()
 
-&nbsp;       subsystemB.B1();
+   {
 
-&nbsp;       subsystemC.C1();
+       subsystemB.B1();
 
-&nbsp;   }
+       subsystemC.C1();
+
+   }
 
 }
 
-&nbsp;
+
 
 class Client
 
 {
 
-&nbsp;   public void Main()
+   public void Main()
 
-&nbsp;   {
+   {
 
-&nbsp;       Facade facade = new Facade(new SubsystemA(), new SubsystemB(), new SubsystemC());
+       Facade facade = new Facade(new SubsystemA(), new SubsystemB(), new SubsystemC());
 
-&nbsp;       facade.Operation1();
+       facade.Operation1();
 
-&nbsp;       facade.Operation2();
+       facade.Operation2();
 
-&nbsp;   }
+   }
 
 }
-
+```
 - Классы SubsystemA, SubsystemB, SubsystemC и т.д. являются компонентами сложной подсистемы, с которыми должен взаимодействовать клиент
 - Client взаимодействует с компонентами подсистемы
 - Facade - непосредственно фасад, который предоставляет интерфейс клиенту для работы с компонентами
 
-1. **Компоновщик (Composite)**
+20. **Компоновщик (Composite)**
 
 Паттерн Компоновщик (Composite) объединяет группы объектов в древовидную структуру по принципу "часть-целое и позволяет клиенту одинаково работать как с отдельными объектами, так и с группой объектов.
 
@@ -2042,28 +2065,28 @@ class Client
 
 - Когда объекты должны быть реализованы в виде иерархической древовидной структуры
 - Когда клиенты единообразно должны управлять как целыми объектами, так и их составными частями. То есть целое и его части должны реализовать один и тот же интерфейс
-
+```
 class Client
 
 {
 
-&nbsp;   public void Main()
+   public void Main()
 
-&nbsp;   {
+   {
 
-&nbsp;       Component root = new Composite("Root");
+       Component root = new Composite("Root");
 
-&nbsp;       Component leaf = new Leaf("Leaf");
+       Component leaf = new Leaf("Leaf");
 
-&nbsp;       Composite subtree = new Composite("Subtree");
+       Composite subtree = new Composite("Subtree");
 
-&nbsp;       root.Add(leaf);
+       root.Add(leaf);
 
-&nbsp;       root.Add(subtree);
+       root.Add(subtree);
 
-&nbsp;       root.Display();
+       root.Display();
 
-&nbsp;   }
+   }
 
 }
 
@@ -2071,25 +2094,25 @@ abstract class Component
 
 {
 
-&nbsp;   protected string name;
+   protected string name;
 
-&nbsp;
 
-&nbsp;   public Component(string name)
 
-&nbsp;   {
+   public Component(string name)
 
-&nbsp;       this.name = name;
+   {
 
-&nbsp;   }
+       this.name = name;
 
-&nbsp;
+   }
 
-&nbsp;   public abstract void Display();
 
-&nbsp;   public abstract void Add(Component c);
 
-&nbsp;   public abstract void Remove(Component c);
+   public abstract void Display();
+
+   public abstract void Add(Component c);
+
+   public abstract void Remove(Component c);
 
 }
 
@@ -2097,55 +2120,55 @@ class Composite : Component
 
 {
 
-&nbsp;   List&lt;Component&gt; children = new List&lt;Component&gt;();
+   List&lt;Component&gt; children = new List&lt;Component&gt;();
 
-&nbsp;
 
-&nbsp;   public Composite(string name)
 
-&nbsp;       : base(name)
+   public Composite(string name)
 
-&nbsp;   {}
+       : base(name)
 
-&nbsp;
+   {}
 
-&nbsp;   public override void Add(Component component)
 
-&nbsp;   {
 
-&nbsp;       children.Add(component);
+   public override void Add(Component component)
 
-&nbsp;   }
+   {
 
-&nbsp;
+       children.Add(component);
 
-&nbsp;   public override void Remove(Component component)
+   }
 
-&nbsp;   {
 
-&nbsp;       children.Remove(component);
 
-&nbsp;   }
+   public override void Remove(Component component)
 
-&nbsp;
+   {
 
-&nbsp;   public override void Display()
+       children.Remove(component);
 
-&nbsp;   {
+   }
 
-&nbsp;       Console.WriteLine(name);
 
-&nbsp;
 
-&nbsp;       foreach (Component component in children)
+   public override void Display()
 
-&nbsp;       {
+   {
 
-&nbsp;           component.Display();
+       Console.WriteLine(name);
 
-&nbsp;       }
 
-&nbsp;   }
+
+       foreach (Component component in children)
+
+       {
+
+           component.Display();
+
+       }
+
+   }
 
 }
 
@@ -2153,50 +2176,50 @@ class Leaf : Component
 
 {
 
-&nbsp;   public Leaf(string name)
+   public Leaf(string name)
 
-&nbsp;       : base(name)
+       : base(name)
 
-&nbsp;   {}
+   {}
 
-&nbsp;
 
-&nbsp;   public override void Display()
 
-&nbsp;   {
+   public override void Display()
 
-&nbsp;       Console.WriteLine(name);
+   {
 
-&nbsp;   }
+       Console.WriteLine(name);
 
-&nbsp;
+   }
 
-&nbsp;   public override void Add(Component component)
 
-&nbsp;   {
 
-&nbsp;       throw new NotImplementedException();
+   public override void Add(Component component)
 
-&nbsp;   }
+   {
 
-&nbsp;
+       throw new NotImplementedException();
 
-&nbsp;   public override void Remove(Component component)
+   }
 
-&nbsp;   {
 
-&nbsp;       throw new NotImplementedException();
 
-&nbsp;   }
+   public override void Remove(Component component)
+
+   {
+
+       throw new NotImplementedException();
+
+   }
 
 }
-
+```
 - **Component**: определяет интерфейс для всех компонентов в древовидной структуре
 - **Composite**: представляет компонент, который может содержать другие компоненты и реализует механизм для их добавления и удаления
 - **Leaf**: представляет отдельный компонент, который не может содержать другие компоненты
 - **Client**: клиент, который использует компоненты
 
-1. **Проксі**
+21. **Проксі**
 
 Паттерн Заместитель (Proxy) предоставляет объект-заместитель, который управляет доступом к другому объекту. То есть создается объект-суррогат, который может выступать в роли другого объекта и замещать его.
 
@@ -2206,20 +2229,20 @@ class Leaf : Component
 - Когда нужно управлять доступом к ресурсу, создание которого требует больших затрат. Реальный объект создается только тогда, когда он действительно может понадобится, а до этого все запросы к нему обрабатывает прокси-объект. Подобная ситуация еще называется **виртуальный заместитель (virtual proxies)**
 - Когда необходимо разграничить доступ к вызываемому объекту в зависимости от прав вызывающего объекта. Подобная ситуация еще называется **защищающий заместитель (protection proxies)**
 - Когда нужно вести подсчет ссылок на объект или обеспечить потокобезопасную работу с реальным объектом. Подобная ситуация называется **"умные ссылки" (smart reference)**
-
+```
 class Client
 
 {
 
-&nbsp;   void Main()
+   void Main()
 
-&nbsp;   {
+   {
 
-&nbsp;       Subject subject = new Proxy();
+       Subject subject = new Proxy();
 
-&nbsp;       subject.Request();
+       subject.Request();
 
-&nbsp;   }
+   }
 
 }
 
@@ -2227,19 +2250,19 @@ abstract class Subject
 
 {
 
-&nbsp;   public abstract void Request();
+   public abstract void Request();
 
 }
 
-&nbsp;
+
 
 class RealSubject : Subject
 
 {
 
-&nbsp;   public override void Request()
+   public override void Request()
 
-&nbsp;   {}
+   {}
 
 }
 
@@ -2247,28 +2270,28 @@ class Proxy : Subject
 
 {
 
-&nbsp;   RealSubject realSubject;
+   RealSubject realSubject;
 
-&nbsp;   public override void Request()
+   public override void Request()
 
-&nbsp;   {
+   {
 
-&nbsp;       if (realSubject == null)
+       if (realSubject == null)
 
-&nbsp;           realSubject = new RealSubject();
+           realSubject = new RealSubject();
 
-&nbsp;       realSubject.Request();
+       realSubject.Request();
 
-&nbsp;   }
+   }
 
 }
-
+```
 - **Subject**: определяет общий интерфейс для Proxy и RealSubject. Поэтому Proxy может использоваться вместо RealSubject
 - **RealSubject**: представляет реальный объект, для которого создается прокси
 - **Proxy**: заместитель реального объекта. Хранит ссылку на реальный объект, контролирует к нему доступ, может управлять его созданием и удалением. При необходимости Proxy переадресует запросы объекту RealSubject
 - **Client**: использует объект Proxy для доступа к объекту RealSubject
 
-1. **Міст**
+22. **Міст**
 
 Мост (Bridge) - структурный шаблон проектирования, который позволяет отделить абстракцию от реализации таким образом, чтобы и абстракцию, и реализацию можно было изменять независимо друг от друга.
 
@@ -2282,26 +2305,26 @@ class Proxy : Subject
 Общая реализация паттерна состоит в объявлении классов абстракций и классов реализаций в отдельных параллельных иерархиях классов.
 
 Связь агрегации между классами Abstraction и Implementor фактически и представляет некоторый мост между двумя параллельными иерархиями классов. Собственно поэтому паттерн получил название Мост.
-
+```
 class Client
 
 {
 
-&nbsp;   static void Main()
+   static void Main()
 
-&nbsp;   {
+   {
 
-&nbsp;       Abstraction abstraction;
+       Abstraction abstraction;
 
-&nbsp;       abstraction = new RefinedAbstraction(new ConcreteImplementorA());
+       abstraction = new RefinedAbstraction(new ConcreteImplementorA());
 
-&nbsp;       abstraction.Operation();
+       abstraction.Operation();
 
-&nbsp;       abstraction.Implementor=new ConcreteImplementorB();
+       abstraction.Implementor=new ConcreteImplementorB();
 
-&nbsp;       abstraction.Operation();
+       abstraction.Operation();
 
-&nbsp;   }
+   }
 
 }
 
@@ -2309,99 +2332,99 @@ abstract class Abstraction
 
 {
 
-&nbsp;   protected Implementor implementor;
+   protected Implementor implementor;
 
-&nbsp;   public Implementor Implementor
+   public Implementor Implementor
 
-&nbsp;   {
+   {
 
-&nbsp;       set { implementor = value; }
+       set { implementor = value; }
 
-&nbsp;   }
+   }
 
-&nbsp;   public Abstraction(Implementor imp)
+   public Abstraction(Implementor imp)
 
-&nbsp;   {
+   {
 
-&nbsp;       implementor = imp;
+       implementor = imp;
 
-&nbsp;   }
+   }
 
-&nbsp;   public virtual void Operation()
+   public virtual void Operation()
 
-&nbsp;   {
+   {
 
-&nbsp;       implementor.OperationImp();
+       implementor.OperationImp();
 
-&nbsp;   }
+   }
 
 }
 
-&nbsp;
+
 
 abstract class Implementor
 
 {
 
-&nbsp;   public abstract void OperationImp();
+   public abstract void OperationImp();
 
 }
 
-&nbsp;
+
 
 class RefinedAbstraction : Abstraction
 
 {
 
-&nbsp;   public RefinedAbstraction(Implementor imp)
+   public RefinedAbstraction(Implementor imp)
 
-&nbsp;       : base(imp)
+       : base(imp)
 
-&nbsp;   {}
+   {}
 
-&nbsp;   public override void Operation()
+   public override void Operation()
 
-&nbsp;   {
+   {
 
-&nbsp;   }
+   }
 
 }
 
-&nbsp;
+
 
 class ConcreteImplementorA : Implementor
 
 {
 
-&nbsp;   public override void OperationImp()
+   public override void OperationImp()
 
-&nbsp;   {
+   {
 
-&nbsp;   }
+   }
 
 }
 
-&nbsp;
+
 
 class ConcreteImplementorB : Implementor
 
 {
 
-&nbsp;   public override void OperationImp()
+   public override void OperationImp()
 
-&nbsp;   {
+   {
 
-&nbsp;   }
+   }
 
 }
-
+```
 - **Abstraction**: определяет базовый интерфейс и хранит ссылку на объект Implementor. Выполнение операций в Abstraction делегируется методам объекта Implementor
 - **RefinedAbstraction**: уточненная абстракция, наследуется от Abstraction и расширяет унаследованный интерфейс
 - **Implementor**: определяет базовый интерфейс для конкретных реализаций. Как правило, Implementor определяет только примитивные операции. Более сложные операции, которые базируются на примитивных, определяются в Abstraction
 - **ConcreteImplementorA** и **ConcreteImplementorB**: конкретные реализации, которые унаследованы от Implementor
 - **Client**: использует объекты Abstraction
 
-1. **Приспособленець (Flyweight)**
+23. **Приспособленець (Flyweight)**
 
 Паттерн Приспособленец (Flyweight) - структурный шаблон проектирования, который позволяет использовать разделяемые объекты сразу в нескольких контекстах. Данный паттерн используется преимущественно для оптимизации работы с памятью.
 
@@ -2417,129 +2440,129 @@ class ConcreteImplementorB : Implementor
 Внешнее состояние зависит от контекста, является изменчивым. В применении к символам внешнее состояние может представлять положение символа на странице. То есть код символа может быть использован многими символами, тогда как положение на странице будет для каждого символа индивидуально.
 
 При создании приспособленца внешнее состояние выносится. В приспособленце остается только внутреннее состояние. То есть в примере с символами приспособленец будет хранить код символа.
-
+```
 class FlyweightFactory
 
 {
 
-&nbsp;   Hashtable flyweights = new Hashtable();
+   Hashtable flyweights = new Hashtable();
 
-&nbsp;   public FlyweightFactory()
+   public FlyweightFactory()
 
-&nbsp;   {
+   {
 
-&nbsp;       flyweights.Add("X", new ConcreteFlyweight());
+       flyweights.Add("X", new ConcreteFlyweight());
 
-&nbsp;       flyweights.Add("Y", new ConcreteFlyweight());
+       flyweights.Add("Y", new ConcreteFlyweight());
 
-&nbsp;       flyweights.Add("Z", new ConcreteFlyweight());
+       flyweights.Add("Z", new ConcreteFlyweight());
 
-&nbsp;   }
+   }
 
-&nbsp;   public Flyweight GetFlyweight(string key)
+   public Flyweight GetFlyweight(string key)
 
-&nbsp;   {
+   {
 
-&nbsp;       if (!flyweights.ContainsKey(key))
+       if (!flyweights.ContainsKey(key))
 
-&nbsp;           flyweights.Add(key, new ConcreteFlyweight());
+           flyweights.Add(key, new ConcreteFlyweight());
 
-&nbsp;       return flyweights\[key\] as Flyweight;
+       return flyweights\[key\] as Flyweight;
 
-&nbsp;   }
+   }
 
 }
 
-&nbsp;
+
 
 abstract class Flyweight
 
 {
 
-&nbsp;   public abstract void Operation(int extrinsicState);
+   public abstract void Operation(int extrinsicState);
 
 }
 
-&nbsp;
+
 
 class ConcreteFlyweight : Flyweight
 
 {
 
-&nbsp;   int intrinsicState;
+   int intrinsicState;
 
-&nbsp;   public override void Operation(int extrinsicState)
+   public override void Operation(int extrinsicState)
 
-&nbsp;   {
+   {
 
-&nbsp;   }
+   }
 
 }
 
-&nbsp;
+
 
 class UnsharedConcreteFlyweight : Flyweight
 
 {
 
-&nbsp;   int allState;
+   int allState;
 
-&nbsp;   public override void Operation(int extrinsicState)
+   public override void Operation(int extrinsicState)
 
-&nbsp;   {
+   {
 
-&nbsp;       allState = extrinsicState;
+       allState = extrinsicState;
 
-&nbsp;   }
+   }
 
 }
 
-&nbsp;
+
 
 class Client
 
 {
 
-&nbsp;   void Main()
+   void Main()
 
-&nbsp;   {
+   {
 
-&nbsp;       int extrinsicstate = 22;
+       int extrinsicstate = 22;
 
-&nbsp;
 
-&nbsp;       FlyweightFactory f = new FlyweightFactory();
 
-&nbsp;
+       FlyweightFactory f = new FlyweightFactory();
 
-&nbsp;       Flyweight fx = f.GetFlyweight("X");
 
-&nbsp;       fx.Operation(--extrinsicstate);
 
-&nbsp;
+       Flyweight fx = f.GetFlyweight("X");
 
-&nbsp;       Flyweight fy = f.GetFlyweight("Y");
+       fx.Operation(--extrinsicstate);
 
-&nbsp;       fy.Operation(--extrinsicstate);
 
-&nbsp;
 
-&nbsp;       Flyweight fd = f.GetFlyweight("D");
+       Flyweight fy = f.GetFlyweight("Y");
 
-&nbsp;       fd.Operation(--extrinsicstate);
+       fy.Operation(--extrinsicstate);
 
-&nbsp;
 
-&nbsp;       UnsharedConcreteFlyweight uf = new UnsharedConcreteFlyweight();
 
-&nbsp;
+       Flyweight fd = f.GetFlyweight("D");
 
-&nbsp;       uf.Operation(--extrinsicstate);
+       fd.Operation(--extrinsicstate);
 
-&nbsp;   }
+
+
+       UnsharedConcreteFlyweight uf = new UnsharedConcreteFlyweight();
+
+
+
+       uf.Operation(--extrinsicstate);
+
+   }
 
 }
-
+```
 - **Flyweight**: определяет интерфейс, через который приспособленцы-разделяемые объекты могут получать внешнее состояние или воздействовать на него
 - **ConcreteFlyweight**: конкретный класс разделяемого приспособленца. Реализует интерфейс, объявленный в типе Flyweight, и при необходимости добавляет внутреннее состояние. Причем любое сохраняемое им состояние должно быть внутренним, не зависящим от контекста
 - **UnsharedConcreteFlyweight**: еще одна конкретная реализация интерфейса, определенного в типе Flyweight, только теперь объекты этого класса являются неразделяемыми
