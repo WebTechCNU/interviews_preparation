@@ -1,0 +1,319 @@
+INTERVIEWS
+
+1. Value types ref types 
+2. GC 
+3. Boxing unboing, how to avoid 
+4. Generic 
+5. Pol abstr how realized 
+6. Avoid cpu usage in reflection; generators 
+7. Covariance 
+8. Hashmap, Hashset 
+9. Transactions, levels of isolation 
+10. Patterns in EF proxy 
+11. Change tracker in EF 
+12. Left join in linq in EF 
+13. Exists sql 
+14. dry kiss yankee 
+15. cap theorem 
+16. saga 
+17. implement where operator from linq 
+18. how request pipeline works in asp .net core 
+19. zero downtown deployment 
+20. IC2 service 
+21. Factory factory method difference 
+22. Lifecycle hooks in angular 
+23. Directives in angular 
+24. Const let diff 
+25. Map reduce filters, how work underhood 
+26. acid principles 
+27. isolation levels of transactions 
+28. memory fragmentation in .net
+29. Clr; jit compiler; Intermediate language;
+30. What code does not undergo Jit compilation
+31. .net standart .net core difference in features 
+32. when val type stored in heap 
+33. out ref in 
+34. default access modiefier 
+35. which access modf exists in clr and does not in c# 
+36. access modfrs in interface 
+37. polymorphic cluster 
+38. extension methods where accessible 
+39. which types supported by switch 
+40. using directive 
+41. dynamic 
+42. viewengine 
+43. what is linq 
+44. testfixture
+45. stack limit 
+46. ienumerable vs iqueriable 
+47. http methods, diff, patch 
+48. status codes 
+49. async await what is under the hood 
+50. limit on number of threads 
+51. whats new in c# 9
+52. 
+53. 
+54. 
+
+
+
+
+Кілька тез від мене по інтерв'ю:
+- В заголовку є Useful links і там є хороші тренінги, а також Софія тут кидала лінк на тренінг. Ознайомтесь, будь ласка, якщо почуваєтесь невпенено.
+- Пам'ятайте, що тут діють ті самі правила, що й на інтерв'ю із зовнішніми кандидатами.
+Ви представляєте компанію і по вас будуть про неї судити.
+Будьте уважні. Інтерв'ю записуються.
+- Не забувайте, що це ще не зовсім Джуніори навіть. Серед них можуть бути супер-зірки, але не вимагайте чогось надзвичайного.
+Дайте відповідь собі на запитання: "Чи ви би працювали з такою людиною, чи готові її взяти до себе в команду."
+- На інтерв'ю відведено 30 хв. Постарайтесь оцінити базові речі і можливість вчитись. Не заглиблюйтесь.
+Тактовно перерибивайте кандидата, бо він хвилюється і може дуже багато говорити.
+- Витратіть, будь ласка, кілька хвилин на початку інтерв'ю для того, щоб розрядити обстановку.
+Це студенти і здебільшого вони дуже хвилюються.
+(Під терміном "студенти" я маю на увазі студентів RD Lab. Вони не обов'язково студенти вишів.)
+- Не забувайте перевірити англійську. Це дуже і дуже важливо. Ідеально, якщо ви вмієте приблизно оцінювати рівень англійської за 5 хв. Але як мінімум за 5 хв розмови ви зможете побачити чи англійська у кандидата така ж як у вас, краща або гірша. Від того і відштовхуйтесь.
+- У кожного з нас своя шкала оцінювання, тому я дуже і дуже вас прошу у фідбеку уникати загальних фраз. Уважно прочитайте опис оцінки, яку ставите. Пишіть конкретні абсолютні речі: "Не зміг пояснити SOLID принципи", "Добре розуміє види SQL Joins і різницю між ними". Не забудьте англійську оцінити і напишіть, будь ласка, чи готові ви взяти до себе людину в команду і працювати з нею.
+- Ці співбесіди - прескрінінг. Вони дадуть можливість віднайти тих, хто готовий до бойових проектів і відсіяти тих, кому потрібно ще вчитись і практикуватись.
+Далі студентів чекають ще багато співбесід.
+
+
+
+start: which projects did, what tasks, which part 
+
+Diana has presented herself really well. Diana has matched 
+most requirements for the position of Junior dev.
+The candidate knows aboud value and reference types, usage of StringBuilder,
+how to avoid boxing/unboxing and usage of Generics, can list GC generations. 
+She knows some (but not all) difference between .net core and framework, has knowledge on lifetime of services in .net core;
+The candidate knows principles of OOP and SOLID, understands how to implement these principles in .net.
+The candidate knows async await structure, how to use. She is aware of concurrency mechanisms.
+Has some understanding of IEnumerable and IQueriable.
+Knows and can use reflection.
+She has experience with unit tests. Explained the difference between integration and unit testing.
+Knows different types of joins;
+Understands REST.
+The candidate can understands English and answers basic questions using correct grammar. 
+
+There are some points that would be great to learn or repeat: 
+- Thread synchronization and locking 
+- IQueriable 
+- Asp .net core middlewares 
+- SQL transactions 
+- SQL indexes 
+
+
+
+
+Tara 
+CLR + 
+Jit compilation + 
+.net standart .net core diff +- 
+data types; val ref types + 
+passage by reference + 
+boxing + 
+access modifiers + 
+strings usage + 
+stringbuilder - 
+abstract class interface diff + 
+extension methods + 
+switch how works + 
+using unmanaged resources, disposable + 
+linq, collections + 
+iqueriable + 
+adonet + 
+ef + 
+
+
+Dmytro 
+OOP + 
+abstraction + 
+.net platform + 
+CLR +
+CLS - 
+GC +
+val ref types diff +
+.net standard core framework +- 
+boxing +-
+dynamic +-
+object +-
+value types inheritance -
+struct +- 
+events delegates +-
+strings -+ interpolation -+ 
+access modifiers -+ 
+static virtual methods -+ 
+enumerable +- list vs array -+ 
+asp mvc + routing -
+linq +-
+unit testing + AAA +
+testfixture +-
+sql joins +
+stored procedures -
+transactions +- 
+
+Dmytro has presented himself decently.
+He has good knopdledge on: oop, .net platform, clr, value and reference types, unit testing and AAA, sql joins.
+The candidate has some incomplete knowledge on topics like: collections, System.Object, asp .net, .net standart, linq.
+The candidate can understands English and answers basic questions using correct grammar.
+
+There are some points that would be great to learn or repeat: 
+- structures
+- events and delegates
+- routing in asp .net 
+- transactions
+- strings and work with strings
+- .net class hierarchy
+- linq 
+- textfixture
+- stored procedures
+
+
+Rostyslav 
+OOP +
+overwriting + 
+overwrite overload diff + 
+val ref types + 
+string + 
+abstract classes +- 
+access modifiers + 
+collections +
+linq +
+ienumerable vs iqueriable -+
+indexes + 
+joins + 
+unit testing AAA + 
+unit testing integration testing diff + 
+http methods +- 
+middlewares + 
+status codes + 
+multithreading +-
+async await +- diff !-
+deadlock - 
+
+
+Rostyslav has presented himself really well.
+
+The candidate can understand English and answers basic questions using correct grammar.
+
+
+
+
+Vitalii 
+
+val ref + 
+boxing + 
+gc + 
+string + 
+stringbuilder + 
+oop + 
+incapsulation + 
+interface abstr cl diff + 
+ienumerable iquerriable + 
+access modifiers incaps + 
+override overload + 
+solid d + 
+di +-
+reflection + 
+exception handling + 
+generic + 
+async await diff +- (repeat)
+thread pool + 
+async to sync how to make +
+how to synchronise tasks +
+tasks threads + 
+lock + 
+unit tests + 
+unit tests integ tests diff + 
+core framework diff + 
+standard + 
+middleware; examples + 
+di lifetimes -
+transactions + 
+joins + 
+indexes +
+rest +- soap -
+lock + 
+
+english +++-
+
+
+
+
+Yaroslav 
+
+http methods +- 
+delete http -
+solid + 
+kiss +
+OOP + 
+incaps, access modifiers + 
+val ref types + 
+GC, loh +
+const readonly +
+abstract classes +
+system object + 
+collections + 
+boxing unboxing + 
+reflection + 
+linq + 
+linq take skip -
+sql joins - 
+sql -
+exception handling +
+
+english +++-
+
+
+
+
+
+
+
+Petro
+
+val ref +
+passage by ref +-
+out ref - 
+boxing -
+gc + generations - 
+string + 
+stringbuilder +-
+oop -
+abstract class interf +-
+incapsulation -
+acces modifiers +-
+solid d + 
+reflection +-
+generic +-
+async await diff +-
+thread pool 
+async to sync how to make +
+lock -
+unit tests +
+unit tests integ tests diff -
+core framework diff +-
+middleware in aspnet; examples -
+di lifetimes -
+transactions +-
+joins +-
+indexes - 
+rest - 
+http methods +- 
+
+english ++-+
+
+Petro has presented himself decently.
+He has good knopdledge on: access modifiers, GC, value and reference types, abstract classes, string type, reflection, exception handling, solid principles, unit testing.
+The candidate can understand English and answers basic questions using correct grammar.
+In general it seems that Petro has good practical experience, but lucks theory knowledge, howerver often when he does not know answer to the theoretical question, he remembers how to implement certain theoretical principle in practice after he is given hints. 
+The following topics would be great to learn or repeat:
+- passage by reference;
+- boxing, unboxing, generics;
+- oop principles;
+- dependency injection lifetimes;
+- async await how works;
+- middlewares in asp .net;
+- sql transactions;
+- sql joins;
+- sql indexes;
+- REST, http methods;
+- integration testing;
